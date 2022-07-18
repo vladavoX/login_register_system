@@ -56,7 +56,7 @@ form {
     transition: all 0.2s ease-in-out;
     outline: none;
 
-    &:focus ~ label {
+    &:focus ~ label, &:valid ~ label {
       position: absolute;
       top: -10px;
       left: 20px;

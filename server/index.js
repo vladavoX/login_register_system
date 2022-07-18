@@ -13,6 +13,9 @@ const app = express();
 // Connect to MongoDB
 connectDB();
 
+const cors = require('cors');
+app.use(cors())
+
 app.use('/graphql', graphqlHTTP({
   schema,
   graphiql: process.env.NODE_ENV === 'development'
