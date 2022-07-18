@@ -13,14 +13,30 @@ export default function Register() {
     refetchQueries: [{ query: GET_USERS }]
   });
 
+  const success = document.getElementById('success-register');
+  const failed = document.getElementById('failed-register');
+
   const onSubmit = (e) => { 
     e.preventDefault();
 
-    registerUser(username, password)
-      .then(() => alert(`${username} has been registered`))
+    registerUser(username, password).then(() => { 
+      failed.innerHTML = '';
+      success.innerHTML = `<p>Registered successfully as <strong>${username}</strong></p>`;
 
-    setUsername('');
-    setPassword('');
+      setTimeout(() => { 
+        success.innerHTML = '';
+      }, 5000);
+    }).catch(() => { 
+      success.innerHTML = '';
+      failed.innerHTML = `<p><strong>${username}</strong> already exists!</p>`;
+
+      setTimeout(() => { 
+        failed.innerHTML = '';
+      }, 5000);
+    }).finally(() => { 
+      setUsername('');
+      setPassword('');
+    })
   }
 
   return (
@@ -39,6 +55,12 @@ export default function Register() {
           <button type='submit'>Sign Up</button>
         </div>
       </form>
+      <div id='success-register' className='success'>
+
+      </div>
+      <div id='failed-register' className='failed'>
+
+      </div>
     </>
   )
 }

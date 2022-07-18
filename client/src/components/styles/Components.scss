@@ -1,5 +1,6 @@
 h1 {
   margin: 0;
+  margin-top: 10px;
   max-width: 400px;
   min-width: 320px;
   padding: 20px;
@@ -16,7 +17,6 @@ form {
   min-width: 320px;
   background-color: #fafafa;
   padding: 20px;
-  margin-bottom: 20px;
 }
 
 .row {
@@ -48,7 +48,7 @@ form {
   }
 
   input {
-    color: #44D62C;
+    color: #4d96db;
     border: 2px solid #44D62C;
     height: 1.8rem;
     border-radius: 4px;
@@ -84,4 +84,38 @@ button {
   font-size: 1.2rem;
 
   cursor: pointer;
+}
+
+.success {
+  background-color: #dff0d8;
+  color: #3c763d;
+  max-width: 400px;
+  min-width: 320px;
+
+  border-radius: 4px;
+
+  padding: 0 20px;
+
+  text-align: center;
+
+  p {
+    border-color: #d6e9c6;
+  }
+}
+
+.failed {
+  background-color: #f2dede;
+  color: #a94442;
+  max-width: 400px;
+  min-width: 320px;
+  
+  border-radius: 4px;
+  
+  padding: 0 20px;
+  
+  text-align: center;
+  
+  p {
+    border-color: #ebccd1;
+  }
 }

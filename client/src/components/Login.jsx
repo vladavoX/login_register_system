@@ -10,13 +10,26 @@ export default function Login() {
   const [password, setPassword] = useState('');
 
   const { data } = useQuery(GET_USERS);
-
+  const success = document.getElementById('success-login');
+  const failed = document.getElementById('failed-login');
 
   const onSubmit = (e) => { 
     e.preventDefault();
     
     if (data.users.find(user => user.username === username && user.password === password)) {
-      alert(`${username} has been logged in`);
+      failed.innerHTML = '';
+      success.innerHTML = `<p>Logged in successfully as <strong>${username}</strong></p>`;
+
+      setTimeout(() => { 
+        success.innerHTML = '';
+      }, 5000);
+    } else {
+      success.innerHTML = '';
+      failed.innerHTML = `<p>Invalid password for <strong>${username}</strong> or user doesn't exist!</p>`;
+
+      setTimeout(() => { 
+        failed.innerHTML = '';
+      }, 5000);
     }
 
     setUsername('');
@@ -38,7 +51,14 @@ export default function Login() {
         <div className='row'>
           <button type='submit'>Log In</button>
         </div>
+
       </form>
+      <div id='success-login' className='success'>
+
+      </div>
+      <div id='failed-login' className='failed'>
+
+      </div>
     </>
   )
 }
