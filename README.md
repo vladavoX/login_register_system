@@ -10,7 +10,7 @@ This is Full-Stack Login and Register System using GraphQL + MERN
   5. fill it with this: <br>
     PORT = 5000 <br>
     NODE_ENV = 'development' <br>
-    MONGO_URI = mongodb+srv://<username>:<password>@<your_cluster>.mongodb.net/<your_db>?retryWrites=true&w=majority
+    MONGO_URI = mongodb+srv://username:password@<your_cluster>.mongodb.net/<your_db>?retryWrites=true&w=majority
   6. cd into directory "server" > run "npm run dev"
   7. in second terminal cd into directory "client" > run "npm start"
   
