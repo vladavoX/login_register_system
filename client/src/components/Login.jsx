@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 
-import { GET_USERS } from '../queries/UserQueries';
+import { LOGIN_USER } from '../mutations/UserMutations';
 
 import './styles/Components.scss'
 
@@ -9,31 +9,34 @@ export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const { data } = useQuery(GET_USERS);
+  const [loginUser] = useMutation(LOGIN_USER, {
+    variables: { username, password },
+  })
+
   const success = document.getElementById('success-login');
   const failed = document.getElementById('failed-login');
 
-  const onSubmit = (e) => { 
+  const onSubmit = (e) => {
     e.preventDefault();
-    
-    if (data.users.find(user => user.username === username && user.password === password)) {
+
+    loginUser(username, password).then(res => { 
       failed.innerHTML = '';
       success.innerHTML = `<p>Logged in successfully as <strong>${username}</strong></p>`;
 
-      setTimeout(() => { 
+      setTimeout(() => {
         success.innerHTML = '';
       }, 5000);
-    } else {
+    }).catch(err => { 
       success.innerHTML = '';
-      failed.innerHTML = `<p>Invalid password for <strong>${username}</strong> or user doesn't exist!</p>`;
+      failed.innerHTML = `<p>Invalid username or password</p>`;
 
-      setTimeout(() => { 
+      setTimeout(() => {
         failed.innerHTML = '';
       }, 5000);
-    }
-
-    setUsername('');
-    setPassword('');
+    }).finally(() => { 
+      setUsername('');
+      setPassword('');
+    })    
   }
 
   return (

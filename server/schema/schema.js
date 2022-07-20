@@ -1,4 +1,5 @@
 const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID, GraphQLList } = require('graphql');
+const bcrypt = require('bcrypt');
 
 const User = require('../models/User');
 
@@ -33,13 +34,33 @@ const mutation = new GraphQLObjectType({
         username: { type: GraphQLString },
         password: { type: GraphQLString }
       },
-      resolve(parent, args) { 
+      resolve(parent, args) {
         const { username, password } = args;
+        const hashedPassword = bcrypt.hashSync(password, 10);
         const newUser = new User({
           username,
-          password
+          password: hashedPassword
         });
         return newUser.save();
+      }
+    },
+    loginUser: {
+      type: UserType,
+      args: {
+        username: { type: GraphQLString },
+        password: { type: GraphQLString }
+      },
+      resolve(parent, args) {
+        const { username, password } = args;
+        return User.findOne({ username }).then(user => { 
+          if (!user) {
+            throw new Error('User not found');
+          }
+          if (!bcrypt.compareSync(password, user.password)) {
+            throw new Error('Password incorrect');
+          }
+          return user;
+        })
       }
     }
   }
